@@ -60,47 +60,59 @@ export default {
 <style lang="scss" scoped>
 .table-wrap {
   height: 100%;
-  .arco-spin {
+
+  ::v-deep(.arco-spin) {
     height: 100%;
   }
+
   &.table-wrap__type0 {
     .content-wrap {
       display: flex;
       flex-direction: column;
       height: 100%;
     }
+
     .table-wrap__header {
       position: relative;
       padding: 0 0 16px 0;
     }
+
     .table-wrap__body {
       flex: 1;
       position: relative;
-      > section {
+
+      >section {
         height: 100%;
         border: 1px solid var(--color-neutral-3);
-        border-radius: 4px;
+        border-radius: 16px;
+
         ::v-deep(.arco-table) {
           height: 100% !important;
+
           .arco-spin {
             display: block;
+
             .arco-table-container {
               height: 100%;
               border: none;
               border-radius: 0px;
+
               .arco-table-content {
                 display: flex;
                 flex-direction: column;
                 height: 100%;
+
                 .arco-table-body {
                   flex: 1;
                   max-height: none !important;
+
                   table {
                     position: absolute;
                     width: 100%;
                     max-height: 100%;
                   }
                 }
+
                 .arco-table-tr:last-child {
                   td {
                     border-bottom: none;
@@ -111,12 +123,14 @@ export default {
           }
         }
       }
+
       &.is-box-shadow {
-        > section {
+        >section {
           border: none;
         }
       }
     }
+
     .table-wrap__footer {
       display: flex;
       justify-content: flex-end;
@@ -133,12 +147,14 @@ export default {
       display: flex;
       flex-direction: column;
       border: 1px solid var(--color-neutral-3);
-      border-radius: 4px;
-      .table-wrap__body > section {
+      border-radius: 16px;
+
+      .table-wrap__body>section {
         border: none;
         border-bottom: 1px solid var(--color-neutral-3);
         border-radius: 0px;
       }
+
       .table-wrap__footer {
         padding: 16px;
       }

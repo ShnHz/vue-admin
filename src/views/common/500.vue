@@ -26,7 +26,7 @@ export default {
 .page-500-wrap {
   display: flex;
   align-items: center;
-  height: 100vh;
+  // height: 100vh;
   width: 100%;
   position: relative;
 }

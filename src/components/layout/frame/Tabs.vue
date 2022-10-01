@@ -137,7 +137,7 @@ $tabs-item-bg__hover: #dee1e6;
             border: 0;
             background: $tabs-item-bg;
             transition: padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-            border-radius: 12px 12px 0 0;
+            border-radius: 16px 12px 0 0;
             .arco-tabs-tab-close-btn {
               display: none;
               position: relative;

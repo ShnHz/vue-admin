@@ -1,13 +1,6 @@
 <template>
   <div class="page-no-has-permissions-wrap">
-    <a-result status="403" subtitle="您没有查看该页面的权限">
-      <template #extra>
-        <a-space>
-          <a-button @click="mixins_contactAdministrator">联系管理员</a-button>
-          <a-button type="primary" @click="back">返回</a-button>
-        </a-space>
-      </template>
-    </a-result>
+    <NoPermisssions />
   </div>
 </template>
 <script>

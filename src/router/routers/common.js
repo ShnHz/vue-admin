@@ -8,14 +8,31 @@ export default [{
             hasTabs: true,
         },
         children: [{
-            path: '/index',
-            name: 'Index',
-            component: () => import('@/views/common/index.vue'),
-            meta: {
-                title: '首页',
-                affix: true
-            }
-        }],
+                path: '/index',
+                name: 'Index',
+                component: () => import('@/views/common/index.vue'),
+                meta: {
+                    title: '首页',
+                    affix: true
+                }
+            },
+            {
+                name: '403',
+                path: '/403',
+                component: () => import('@/views/common/403.vue'),
+                meta: {
+                    title: '403',
+                }
+            },
+            {
+                name: '500',
+                path: '/500',
+                component: () => import('@/views/common/500.vue'),
+                meta: {
+                    title: '500',
+                }
+            },
+        ],
     }, {
         name: '404',
         path: '/404',
@@ -24,16 +41,6 @@ export default [{
     {
         path: `/:pathMatch(.*)*`,
         redirect: '/404'
-    },
-    {
-        name: '403',
-        path: '/403',
-        component: () => import('@/views/common/403.vue'),
-    },
-    {
-        name: '500',
-        path: '/500',
-        component: () => import('@/views/common/500.vue'),
     },
     {
         name: 'noHasPermissions',
