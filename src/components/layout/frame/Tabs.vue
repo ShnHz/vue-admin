@@ -113,70 +113,142 @@ export default {
 $tabs-item-bg: #fff;
 $tabs-item-bg__active: $--color-primary-bg;
 $tabs-item-bg__hover: #dee1e6;
-#vue-admin-wrap > .arco-layout {
+// #vue-admin-wrap > .arco-layout {
+//   .tabs-wrap {
+//     display: flex;
+//     align-items: flex-end;
+//     width: calc(100% + 48px);
+//     height: 50px;
+//     position: relative;
+//     left: -24px;
+//     padding: 0 24px;
+//     border-bottom: 1px solid $--sys-borderColor;
+//     .arco-tabs {
+//       min-width: 100%;
+//       .arco-tabs-nav {
+//         &::before {
+//           display: none;
+//         }
+//         .arco-tabs-nav-tab-list {
+//           .arco-tabs-tab {
+//             padding: 8px 24px;
+//             margin-right: -18px;
+//             margin-top: 1px;
+//             border: 0;
+//             background: $tabs-item-bg;
+//             transition: padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+//             border-radius: 16px 12px 0 0;
+//             .arco-tabs-tab-close-btn {
+//               display: none;
+//               position: relative;
+//               top: -1px;
+//               margin-left: 10px;
+//               font-size: 12px;
+
+//               .arco-icon-hover-size-medium {
+//                 font-size: 10px;
+//               }
+//               &::before {
+//                 transform: translate(-50%, -46%);
+//               }
+//             }
+//             &:hover {
+//               padding: 8px 24px 8px 30px;
+//               background: $tabs-item-bg__hover;
+//               -webkit-mask: url('/static/img/bg/tabsbg.png');
+//               -webkit-mask-size: 100% 100%;
+//               mask: url('/static/img/bg/tabsbg.png');
+//               mask-size: 100% 100%;
+//               .arco-tabs-tab-close-btn {
+//                 display: block;
+//               }
+//             }
+//             &.arco-tabs-tab-active {
+//               padding: 8px 24px 8px 30px;
+//               background: $tabs-item-bg__active;
+//               -webkit-mask: url('/static/img/bg/tabsbg.png');
+//               -webkit-mask-size: 100% 100%;
+//               mask: url('/static/img/bg/tabsbg.png');
+//               mask-size: 100% 100%;
+//               .arco-tabs-tab-close-btn {
+//                 display: block;
+//               }
+//             }
+//           }
+//         }
+//       }
+//       .arco-tabs-content {
+//         display: none;
+//       }
+//     }
+//   }
+// }
+
+#vue-admin-wrap>.arco-layout {
   .tabs-wrap {
     display: flex;
     align-items: flex-end;
     width: calc(100% + 48px);
-    height: 50px;
     position: relative;
     left: -24px;
-    padding: 0 24px;
+    padding: 8px 24px;
     border-bottom: 1px solid $--sys-borderColor;
+
     .arco-tabs {
       min-width: 100%;
+
       .arco-tabs-nav {
         &::before {
           display: none;
         }
+
         .arco-tabs-nav-tab-list {
           .arco-tabs-tab {
-            padding: 8px 24px;
-            margin-right: -18px;
-            margin-top: 1px;
+            padding: 8px 16px;
+            margin-right: 8px;
             border: 0;
             background: $tabs-item-bg;
             transition: padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-            border-radius: 16px 12px 0 0;
+            border-radius: 8px;
+
             .arco-tabs-tab-close-btn {
-              display: none;
+              opacity: 0;
+              width: 0px;
               position: relative;
-              top: -1px;
-              margin-left: 10px;
+              top: -2px;
+              margin-left: 0px;
               font-size: 12px;
+              transition: all .2s;
 
               .arco-icon-hover-size-medium {
                 font-size: 10px;
+
+                &::before {
+                  transform: translate(-50%, -42%);
+                }
               }
-              &::before {
-                transform: translate(-50%, -46%);
-              }
+
+
             }
+
             &:hover {
-              padding: 8px 24px 8px 30px;
               background: $tabs-item-bg__hover;
-              -webkit-mask: url('/static/img/bg/tabsbg.png');
-              -webkit-mask-size: 100% 100%;
-              mask: url('/static/img/bg/tabsbg.png');
-              mask-size: 100% 100%;
+
               .arco-tabs-tab-close-btn {
-                display: block;
+                opacity: 1;
+                width: 10px;
+                margin-left: 10px;
               }
             }
+
             &.arco-tabs-tab-active {
-              padding: 8px 24px 8px 30px;
               background: $tabs-item-bg__active;
-              -webkit-mask: url('/static/img/bg/tabsbg.png');
-              -webkit-mask-size: 100% 100%;
-              mask: url('/static/img/bg/tabsbg.png');
-              mask-size: 100% 100%;
-              .arco-tabs-tab-close-btn {
-                display: block;
-              }
+              font-weight: 800;
             }
           }
         }
       }
+
       .arco-tabs-content {
         display: none;
       }

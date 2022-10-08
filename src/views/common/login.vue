@@ -2,7 +2,7 @@
  * @Author: sanghangning 
  * @Date: 2022-10-01 16:09:53 
  * @Last Modified by: sanghangning
- * @Last Modified time: 2022-10-02 00:21:09
+ * @Last Modified time: 2022-10-02 00:42:41
  */
 <template >
   <div class="login-wrap">
@@ -176,7 +176,7 @@ export default {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background: url('/static/img/bg/login-bg.png') no-repeat 0 -120px;
+    background: url('/static/img/bg/login-bg.png') no-repeat 0 -60px;
   }
 
   section {
