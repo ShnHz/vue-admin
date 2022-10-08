@@ -2,7 +2,7 @@
  * @Author: sanghangning 
  * @Date: 2022-10-01 16:09:53 
  * @Last Modified by: sanghangning
- * @Last Modified time: 2022-10-02 00:42:41
+ * @Last Modified time: 2022-10-08 15:54:16
  */
 <template >
   <div class="login-wrap">
@@ -133,7 +133,6 @@ export default {
   },
   computed: {},
   mounted() {
-    let _this = this
     this.form.username = this.$cookies.get('login_username')
 
     this.radomBgImgListTime = setInterval(() => {
