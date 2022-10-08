@@ -1,1 +1,0 @@
-import{_ as o,r as s,o as t,c as n,a}from"./index.df838f5f.js";const _={name:"index",data(){return{}},computed:{},mounted(){},methods:{}},r={class:"index-wrap"};function c(d,i,p,m,u,l){const e=s("NoPermisssions");return t(),n("div",r,[a(e)])}var v=o(_,[["render",c],["__scopeId","data-v-348300ca"]]);export{v as default};
