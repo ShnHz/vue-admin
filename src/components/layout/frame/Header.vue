@@ -93,23 +93,39 @@ export default {
       },
     },
   },
-  mounted() {},
+  mounted() { },
   methods: {
     refresh() {
       this.$bus.$emit('reload-router-view')
     },
-    notice() {},
+    notice() { },
     fullscreen() {
-      let element = document.documentElement
-      if (element.requestFullscreen) {
-        element.requestFullscreen()
-      } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen()
-      } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen()
-      } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen()
+      const isFullscreen = document.fullscreenElement ||
+        document.msFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.webkitFullscreenElement || false;
+
+      if (isFullscreen) {
+        let exitFullScreen = document.exitFullScreen ||
+          document.mozCancelFullScreen ||
+          document.webkitExitFullscreen ||
+          document.msExitFullscreen;
+        if (exitFullScreen) {
+          exitFullScreen.call(document);
+        }
+      } else {
+        let element = document.documentElement
+        if (element.requestFullscreen) {
+          element.requestFullscreen()
+        } else if (element.msRequestFullscreen) {
+          element.msRequestFullscreen()
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen()
+        } else if (element.webkitRequestFullscreen) {
+          element.webkitRequestFullscreen()
+        }
       }
+
     },
     out() {
       this.$router.push('/login')
@@ -118,13 +134,14 @@ export default {
 }
 </script>
 <style lang="scss">
-#vue-admin-wrap > .arco-layout {
+#vue-admin-wrap>.arco-layout {
   .arco-layout-header {
     display: flex;
     align-items: center;
     min-width: 880px;
     height: 60px;
     border-bottom: 1px solid #f6f6f6;
+
     .arco-breadcrumb {
       font-size: 16px;
       transition: all 0.2s ease;
@@ -132,33 +149,42 @@ export default {
 
     .right-wrap {
       margin-left: auto;
+
       svg {
         font-size: 16px;
         color: $--textColor-3;
         transition: color 0.2s ease;
+
         &:hover {
           color: #000;
         }
       }
-      > span {
+
+      >span {
         margin-left: 16px;
+
         &:first-child {
           margin-left: 0;
         }
       }
+
       .notice-wrap {
         cursor: pointer;
       }
+
       .refresh-wrap {
         cursor: pointer;
       }
+
       .fullscreen-wrap {
         cursor: pointer;
       }
+
       .time-wrap {
         font-size: 12px;
         color: $--textColor-3;
       }
+
       .out-wrap {
         cursor: pointer;
       }
