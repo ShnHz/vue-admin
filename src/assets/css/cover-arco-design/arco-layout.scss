@@ -2,7 +2,7 @@
  * @Author: sanghangning 
  * @Date: 2022-01-14 11:26:19 
  * @Last Modified by: sanghangning
- * @Last Modified time: 2022-02-11 11:50:01
+ * @Last Modified time: 2022-10-08 15:48:58
  */
 #vue-admin-wrap>.arco-layout {
     height: 100vh;
@@ -33,6 +33,7 @@
             background: transparent;
 
             .arco-menu-inner {
+                overflow-x: hidden;
                 padding: 0px 24px 0 12px;
                 transition: padding $--sideBar-transition-duration ease;
             }
