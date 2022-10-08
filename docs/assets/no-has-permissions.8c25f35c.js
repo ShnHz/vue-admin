@@ -1,0 +1,1 @@
+import{_ as e,r as o,o as a,c as r,a as t}from"./index.df838f5f.js";const n={data(){return{}},methods:{back(){this.$router.go(-1)}}},_={class:"page-no-has-permissions-wrap"};function c(i,p,d,m,u,l){const s=o("NoPermisssions");return a(),r("div",_,[t(s)])}var f=e(n,[["render",c],["__scopeId","data-v-4e451033"]]);export{f as default};
