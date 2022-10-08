@@ -38,10 +38,10 @@ export default [{
         path: '/404',
         component: () => import('@/views/common/404.vue'),
     },
-    // {
-    //     path: `/:pathMatch(.*)*`,
-    //     redirect: '/404'
-    // },
+    {
+        path: `/:pathMatch(.*)*`,
+        redirect: '/404'
+    },
     {
         name: 'noHasPermissions',
         path: '/no-has-permissions',
