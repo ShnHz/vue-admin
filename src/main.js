@@ -10,11 +10,11 @@ import Mixins from './utils/mixins';
 const app = createApp(App)
 
 // css
-import '@css/varuables.css'
-import '@css/result.scss'
-import '@css/skeleton.css'
-import '@/assets/iconfont/shn-ui/iconfont.css'
-import '@css/cover-arco-design/index.scss'
+import './assets/css/varuables.css'
+import './assets/css/result.scss'
+import './assets/css/skeleton.css'
+import './assets/iconfont/shn-ui/iconfont.css'
+import './assets/css/cover-arco-design/index.scss'
 import 'nprogress/nprogress.css'
 
 // api
@@ -31,34 +31,16 @@ app.config.globalProperties.$document = document
 window.$vueApp = app
 
 // components
-import {
-    loadAllComponents
-} from '@/components/components'
-loadAllComponents(app)
+import globalComponents from './components'
+app.use(globalComponents)
 
 // plugins  
-import {
-    loadAllPlugins
-} from '@/plugins/index'
-loadAllPlugins(app)
+import globalPlugins from './plugins/index'
+app.use(globalPlugins)
 
 
 
-Promise.all([getUserInfo()]).then(() => {
+Promise.all([store.dispatch('common/getUserInfo')]).then(() => {
     app.use(store).use(router).mixin(Mixins)
     app.mount('#app')
 })
-
-async function getUserInfo() {
-    //     // 获取用户信息
-    //     await api.user
-    //         .getUserInfo()
-    //         .then((res) => {
-    //             store.commit('common/setUserInfo', {
-    //                 ...res.data.data.user_info,
-    //                 permission: res.data.data.__permission,
-    //             })
-    //             store.commit('common/setToken', res.data.data.__token)
-    //         })
-    //         .catch((error) => {})
-}

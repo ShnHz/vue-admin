@@ -2,18 +2,22 @@ import {
   createRouter,
   createWebHistory
 } from 'vue-router'
+
+import store from '../store'
+
 import common from './routers/common'
 import template from './routers/template'
 
 import NProgress from 'nprogress'
+NProgress.configure({
+  showSpinner: false
+}); // NProgress Configuration
 
 
 let routes = [
   ...common,
   ...template
 ]
-
-routes = checkPermissions(routes)
 
 const router = createRouter({
   history: createWebHistory(
@@ -29,6 +33,18 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
+
+  // 当前未登录
+  if (!store.state.common.token && to.name != 'Login') {
+    next({
+      name: 'Login',
+      query: {
+        ...to.query,
+        redirect: to.name
+      },
+    })
+  }
+
   next()
 })
 
@@ -37,16 +53,3 @@ router.afterEach(() => {
 })
 
 export default router
-
-function checkPermissions(arr) {
-  return arr.filter(item => {
-    if (item.children) {
-      item.children = checkPermissions(item.children)
-    }
-    if (item.meta && item.meta.hasPermissions == false) {
-      return false
-    } else {
-      return true
-    }
-  })
-}

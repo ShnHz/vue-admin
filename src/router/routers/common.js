@@ -33,14 +33,6 @@ export default [{
                 }
             },
         ],
-    }, {
-        name: '404',
-        path: '/404',
-        component: () => import('@/views/common/404.vue'),
-    },
-    {
-        path: `/:pathMatch(.*)*`,
-        redirect: '/404'
     },
     {
         name: 'noHasPermissions',
@@ -52,13 +44,23 @@ export default [{
         path: '/no-has-permissions-no-router',
         component: () => import('@/views/common/no-has-permissions.vue'),
         meta: {
-            hasPermissions: false
+            hasLogin: false
         }
     },
     {
         name: 'Login',
         path: '/login',
-        component: () => import('@/views/common/login.vue'),
+        component: () => import('@/views/common/login.vue')
     },
 
+    // 404 not found
+    {
+        name: '404',
+        path: '/404',
+        component: () => import('@/views/common/404.vue')
+    },
+    {
+        path: `/:pathMatch(.*)*`,
+        redirect: '/404'
+    },
 ]

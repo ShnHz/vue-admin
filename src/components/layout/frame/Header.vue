@@ -27,7 +27,7 @@
           <IconFullscreen />
         </a-tooltip>
       </span>
-      <span class="out-wrap" title="退出登录" @click="out" v-if="$store.state.common.userInfo.userId">
+      <span class="out-wrap" title="退出登录" @click="logout" v-if="$store.state.common.token">
         <a-tooltip content="退出登录">
           <IconPoweroff />
         </a-tooltip>
@@ -127,8 +127,8 @@ export default {
       }
 
     },
-    out() {
-      this.$router.push('/login')
+    logout() {
+      this.$store.dispatch('common/logout').then(() => { })
     },
   },
 }

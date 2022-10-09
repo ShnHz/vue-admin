@@ -2,7 +2,7 @@
  * @Author: sanghangning 
  * @Date: 2019-12-11 10:47:09 
  * @Last Modified by: sanghangning
- * @Last Modified time: 2022-01-17 17:05:03
+ * @Last Modified time: 2022-10-09 15:28:14
  */
 <template >
   <div class="login-wrap">
@@ -12,12 +12,13 @@
     <section>
       <div class="left-wrap">
         <div class="qrcode-btn-wrap" @click="loginType = loginType == 'password' ? 'qrcode' : 'password'">
-          <PluginsSvgIcon name="login_qrcode" v-if="loginType == 'password'" />
-          <PluginsSvgIcon name="login_pc" v-else />
+          <SvgLoginQrcode class="svg-icon" v-if="loginType == 'password'" />
+          <SvgLoginPc class="svg-icon" v-else />
         </div>
         <div class="login-form-wrap">
           <!-- 账户密码登录 -->
-          <a-space direction="vertical" size="large" style="width:100%" v-if="loginType == 'password'" class="login-form-wrap__password">
+          <a-space direction="vertical" size="large" style="width:100%" v-if="loginType == 'password'"
+            class="login-form-wrap__password">
             <h1>管理系统模板</h1>
             <a-form :model="form" layout="vertical">
               <a-form-item field="username" label="用户名">
@@ -54,7 +55,8 @@
             </a-form>
           </a-space>
           <!-- 扫码登陆 -->
-          <a-space direction="vertical" size="large" style="width:100%" v-if="loginType == 'qrcode'" class="login-form-wrap__qrcode">
+          <a-space direction="vertical" size="large" style="width:100%" v-if="loginType == 'qrcode'"
+            class="login-form-wrap__qrcode">
             <h1>扫码登录管理系统模板</h1>
             <img src="@img/common/qrcode.png" alt />
             <a-divider />
@@ -66,7 +68,7 @@
         </div>
       </div>
       <div class="right-wrap">
-        <PluginsSvgIcon name="login_person" />
+        <SvgLoginPerson class="svg-icon" />
       </div>
     </section>
   </div>
@@ -78,12 +80,19 @@ import {
   IconUnlock,
 } from '@arco-design/web-vue/es/icon'
 
+import SvgLoginPerson from '@/assets/svg/login_person.svg'
+import SvgLoginPc from '@/assets/svg/login_pc.svg'
+import SvgLoginQrcode from '@/assets/svg/login_qrcode.svg'
+
 export default {
   name: 'login',
   components: {
     IconArrowRight,
     IconUser,
     IconUnlock,
+    SvgLoginPerson,
+    SvgLoginPc,
+    SvgLoginQrcode
   },
   data() {
     return {
@@ -115,17 +124,21 @@ export default {
   height: 100vh;
   width: 100%;
   position: relative;
-  > .bg {
+
+  >.bg {
     flex: 1;
     height: 100%;
     position: relative;
+
     &.left-wrap {
       background: #cbe4fe;
     }
+
     &.right-wrap {
       background: #1f2071;
     }
   }
+
   section {
     display: flex;
     align-items: center;
@@ -135,33 +148,39 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    > div {
+
+    >div {
       flex: 1;
       height: 100%;
     }
+
     .left-wrap {
       position: relative;
       background: #fff;
       border-radius: 24px 0 0 24px;
       box-shadow: -50px 20px 50px 2px rgba(0, 0, 0, 0.05);
+
       .qrcode-btn-wrap {
         position: absolute;
         top: 24px;
         left: 24px;
         width: 53px;
         height: 53px;
+
         &:hover {
           svg {
             color: #000;
             transform: scale(1.1);
           }
         }
+
         svg {
           position: absolute;
           font-size: 40px;
           color: $--color-text-placeholder;
           transition: 0.2s all ease;
         }
+
         &::after {
           cursor: pointer;
           content: '';
@@ -174,24 +193,29 @@ export default {
           border-left: 60px solid transparent;
         }
       }
+
       .login-form-wrap {
         width: 340px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+
         h1 {
           text-align: center;
           font-size: 24px;
           font-weight: 400;
         }
+
         .tip {
           text-align: center;
           color: $--color-text-placeholder;
+
           a {
             color: $--color-primary;
           }
         }
+
         .login-form-wrap__password {
           ::v-deep(.arco-btn) {
             .arco-btn-icon {
@@ -201,8 +225,10 @@ export default {
             }
           }
         }
+
         .login-form-wrap__qrcode {
           text-align: center;
+
           img {
             width: 200px;
             height: 200px;
@@ -210,6 +236,7 @@ export default {
         }
       }
     }
+
     .right-wrap {
       flex: 1.02;
       position: relative;

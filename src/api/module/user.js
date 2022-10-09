@@ -7,6 +7,10 @@ const user = {
             nprogress: false
         });
     },
+    // 登录
+    login(params){
+        return window.$vueApp.config.globalProperties.$http.post(`${base.api_admin}/login/`, params, {});
+    },
     // 退出登录
     logout(params) {
         return window.$vueApp.config.globalProperties.$http.post(`${base.api_admin}/logout/`, params, {});

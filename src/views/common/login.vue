@@ -2,7 +2,7 @@
  * @Author: sanghangning 
  * @Date: 2022-10-01 16:09:53 
  * @Last Modified by: sanghangning
- * @Last Modified time: 2022-10-08 15:54:16
+ * @Last Modified time: 2022-10-09 17:06:51
  */
 <template >
   <div class="login-wrap">
@@ -28,35 +28,37 @@
 
         <div class="login-wrap">
           <div class="qrcode-btn-wrap" @click="loginType = loginType == 'password' ? 'qrcode' : 'password'">
-            <PluginsSvgIcon name="login_qrcode" v-if="loginType == 'password'" />
-            <PluginsSvgIcon name="login_pc" v-else />
+            <SvgLoginQrcode class="svg-icon" v-if="loginType == 'password'" />
+            <SvgLoginPc class="svg-icon" v-else />
           </div>
           <div class="login-form-wrap">
             <!-- 账户密码登录 -->
             <a-space direction="vertical" size="large" style="width:100%" v-if="loginType == 'password'"
               class="login-form-wrap__password">
               <h1>管理系统模板</h1>
-              <a-form :model="form" layout="vertical">
-                <a-form-item field="username" label="用户名">
+              <a-form :model="form" layout="vertical" ref="form">
+                <a-form-item field="username" label="用户名"
+                  :rules="[{required:true,message:'请输入用户名'},{minLength:5,message:'用户名不能少于5个字符'}]" hide-asterisk>
                   <a-input v-model="form.username" placeholder="请输入用户名称/手机号码" allow-clear size="large">
                     <template #prefix>
                       <IconUser />
                     </template>
                   </a-input>
                 </a-form-item>
-                <a-form-item field="password" label="密码">
+                <a-form-item field="password" label="密码" :rules="[{required:true,message:'请输入密码'}]" hide-asterisk>
                   <a-input-password v-model="form.password" placeholder="请输入密码" allow-clear size="large">
                     <template #prefix>
                       <IconUnlock />
                     </template>
                   </a-input-password>
                 </a-form-item>
-                <a-form-item field label="验证码">
+                <a-form-item field="code" label="验证码"
+                  :rules="[{required:true,message:'请输入验证码'},{length:4,message:'验证码长度为4'}]" hide-asterisk>
                   <img src="@img/common/code.png" alt style="margin-right:10px" />
                   <a-input v-model="form.code" placeholder="请输入验证码" allow-clear size="large" />
                 </a-form-item>
                 <a-form-item>
-                  <a-button type="primary" size="large" long @click="login">
+                  <a-button type="primary" size="large" long @click="login" html-type="submit">
                     登 录
                     <template #icon>
                       <IconArrowRight />
@@ -94,12 +96,17 @@ import {
   IconUnlock,
 } from '@arco-design/web-vue/es/icon'
 
+import SvgLoginPc from '@/assets/svg/login_pc.svg'
+import SvgLoginQrcode from '@/assets/svg/login_qrcode.svg'
+
 export default {
   name: 'login',
   components: {
     IconArrowRight,
     IconUser,
     IconUnlock,
+    SvgLoginPc,
+    SvgLoginQrcode
   },
   data() {
     return {
@@ -133,7 +140,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.form.username = this.$cookies.get('login_username')
+    this.form.username = localStorage.getItem('login_username')
 
     this.radomBgImgListTime = setInterval(() => {
       let list = [...this.randomList]
@@ -153,8 +160,13 @@ export default {
   methods: {
     // 登录事件
     login() {
-      if (this.form.username) this.$cookies.set('login_username', this.form.username)
-      this.$router.push('/')
+      if (this.form.username) localStorage.setItem('login_username', this.form.username)
+
+      this.$refs.form.validate((error) => {
+        if (!error) {
+          this.$store.dispatch('common/login').then(() => { })
+        }
+      })
     },
   },
 }
