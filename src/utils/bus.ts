@@ -27,4 +27,4 @@ class Bus {
         }
     }
 }
-export default Bus;
+export default new Bus;

@@ -34,7 +34,7 @@ npm run create:template
 │   ├── components              // vue组件           
 │   ├── plugins                 // vue插件          
 │   ├── router                  // 路由文件        
-│   ├── store                   // vuex      
+│   ├── pinia                   // pinia      
 │   ├── utils                   // 工具类/mixins     
 │   ├── views                   // 页面
 │   ├── App.vue                 // vue入口

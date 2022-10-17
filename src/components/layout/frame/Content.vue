@@ -10,7 +10,8 @@
   </a-layout-content>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapStores } from 'pinia'
+import useTabsBarStore from '@pinia/modules/tabsBar.js'
 
 export default {
   name: 'LayoutContent',
@@ -18,12 +19,10 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters({
-      visitedRoutes: 'tabsBar/visitedRoutes',
-    }),
+    ...mapStores(useTabsBarStore),
     cachedRoutes() {
       const cachedRoutesArr = []
-      this.visitedRoutes.forEach((item) => {
+      this.tabsBarStore.visitedRoutes.forEach((item) => {
         if (item.meta.keepAlive) {
           cachedRoutesArr.push(item.name)
         }
@@ -46,11 +45,13 @@ export default {
 .content-view-leave-to {
   opacity: 0;
 }
+
 .content-view-leave-from,
 .content-view-enter-to {
   opacity: 1;
 }
-.arco-layout-content > .content-wrap {
+
+.arco-layout-content>.content-wrap {
   // overflow: auto;
   height: 100%;
   position: relative;

@@ -3,7 +3,9 @@ import {
 } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import pinia from './pinia'
+import useCommonState from '@pinia/modules/common.js'
+
 // mixin
 import Mixins from './utils/mixins';
 
@@ -21,10 +23,6 @@ import 'nprogress/nprogress.css'
 import api from './api';
 app.config.globalProperties.$api = api;
 
-// bus
-import Bus from './utils/bus';
-app.config.globalProperties.$bus = new Bus()
-
 // config
 app.config.globalProperties.$window = window
 app.config.globalProperties.$document = document
@@ -38,9 +36,10 @@ app.use(globalComponents)
 import globalPlugins from './plugins/index'
 app.use(globalPlugins)
 
+app.use(pinia).use(router).mixin(Mixins)
 
+const commonState = useCommonState()
 
-Promise.all([store.dispatch('common/getUserInfo')]).then(() => {
-    app.use(store).use(router).mixin(Mixins)
+Promise.all([commonState.getUserInfo()]).then(() => {
     app.mount('#app')
 })

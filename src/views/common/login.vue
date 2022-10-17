@@ -2,7 +2,7 @@
  * @Author: sanghangning 
  * @Date: 2022-10-01 16:09:53 
  * @Last Modified by: sanghangning
- * @Last Modified time: 2022-10-09 17:06:51
+ * @Last Modified time: 2022-10-17 16:16:22
  */
 <template >
   <div class="login-wrap">
@@ -99,6 +99,9 @@ import {
 import SvgLoginPc from '@/assets/svg/login_pc.svg'
 import SvgLoginQrcode from '@/assets/svg/login_qrcode.svg'
 
+import useCommonState from '@pinia/modules/common.js'
+
+
 export default {
   name: 'login',
   components: {
@@ -110,6 +113,8 @@ export default {
   },
   data() {
     return {
+      commonState:useCommonState(),
+
       loginType: 'password',
       form: {
         username: null,
@@ -164,7 +169,7 @@ export default {
 
       this.$refs.form.validate((error) => {
         if (!error) {
-          this.$store.dispatch('common/login').then(() => { })
+          this.commonState.login().then(() => { })
         }
       })
     },

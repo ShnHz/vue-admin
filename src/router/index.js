@@ -3,7 +3,7 @@ import {
   createWebHistory
 } from 'vue-router'
 
-import store from '../store'
+import useCommonState from '@pinia/modules/common.js'
 
 import common from './routers/common'
 import template from './routers/template'
@@ -32,10 +32,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const commonState = useCommonState()
+
   NProgress.start()
 
   // 当前未登录
-  if (!store.state.common.token && to.name != 'Login') {
+  if (!commonState.token && to.name != 'Login') {
     next({
       name: 'Login',
       query: {

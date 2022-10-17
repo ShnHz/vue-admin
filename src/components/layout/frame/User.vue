@@ -1,21 +1,28 @@
 <template>
-  <div class="layout-user-wrap" :class="{'is-collapsed':$store.state.common.collapsed}" :title="$store.state.common.userInfo.username">
-    <a-avatar :size="$store.state.common.collapsed ? 36 : 50">
+  <div class="layout-user-wrap" :class="{'is-collapsed':commonState.collapsed}" :title="commonState.userInfo.username">
+    <a-avatar :size="commonState.collapsed ? 36 : 50">
       <img alt="avatar" :src="avatar" />
     </a-avatar>
     <div class="user-info-wrap">
-      <h3>Hi,{{$store.state.common.userInfo.username}}</h3>
+      <h3>Hi,{{commonState.userInfo.username}}</h3>
       <p>nice to meet you!</p>
     </div>
   </div>
 </template>
 <script>
+import useCommonState from '@pinia/modules/common.js'
+
 export default {
   data() {
     return {
-      avatar:this.$store.getters['common/getUserAvatar']
+      commonState:useCommonState(),
     }
   },
+  computed:{
+    avatar(){
+      return this.commonState.getUserAvatar
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

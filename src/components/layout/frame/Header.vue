@@ -27,110 +27,102 @@
           <IconFullscreen />
         </a-tooltip>
       </span>
-      <span class="out-wrap" title="退出登录" @click="logout" v-if="$store.state.common.token">
+      <span class="out-wrap" title="退出登录" @click="logout" v-if="commonState.token">
         <a-tooltip content="退出登录">
           <IconPoweroff />
         </a-tooltip>
       </span>
-      <span class="out-wrap" title="登录" @click="$router.push('/login')" v-else>
+      <span class="out-wrap" title="登录" @click="router.push('/login')" v-else>
         <a-button>登录</a-button>
       </span>
     </div>
   </a-layout-header>
 </template>
-<script>
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import Bus from '@/utils/bus';
 import {
   IconNotification,
   IconLoop,
   IconFullscreen,
   IconPoweroff,
 } from '@arco-design/web-vue/es/icon'
-import { mapGetters } from 'vuex'
 
-export default {
-  components: { IconNotification, IconLoop, IconFullscreen, IconPoweroff },
-  data() {
-    return {}
-  },
-  computed: {
-    ...mapGetters({
-      visitedMenus: 'menu/visitedMenus',
-    }),
-    breadcrumbList() {
-      return this.visitedMenus.filter((item) => {
-        return item.meta.title
-      })
-    },
-    title() {
-      return this.$route ? this.$route.meta.title : 'Header'
-    },
-  },
-  watch: {
-    $route: {
-      immediate: true,
-      deep: true,
-      handler(newValue, oldValue) {
-        let _this = this
-        let arr = []
-        find(this.$router.options.routes)
-        function find(list) {
-          for (let i = 0; i < list.length; i++) {
-            let isActive = false
-            if (list[i].name == _this.$route.name) {
-              arr.unshift(list[i])
-              return true
-            }
-            if (list[i].children && list[i].children.length > 0) {
-              isActive = find(list[i].children)
-              if (isActive) {
-                arr.unshift(list[i])
-              }
-            }
-          }
-          return false
-        }
-        this.$store.commit('menu/updateVisitedMenus', arr)
-      },
-    },
-  },
-  mounted() { },
-  methods: {
-    refresh() {
-      this.$bus.$emit('reload-router-view')
-    },
-    notice() { },
-    fullscreen() {
-      const isFullscreen = document.fullscreenElement ||
-        document.msFullscreenElement ||
-        document.mozFullScreenElement ||
-        document.webkitFullscreenElement || false;
+import useMenuState from '@pinia/modules/menu.js'
+import useCommonState from '@pinia/modules/common.js'
 
-      if (isFullscreen) {
-        let exitFullScreen = document.exitFullScreen ||
-          document.mozCancelFullScreen ||
-          document.webkitExitFullscreen ||
-          document.msExitFullscreen;
-        if (exitFullScreen) {
-          exitFullScreen.call(document);
-        }
-      } else {
-        let element = document.documentElement
-        if (element.requestFullscreen) {
-          element.requestFullscreen()
-        } else if (element.msRequestFullscreen) {
-          element.msRequestFullscreen()
-        } else if (element.mozRequestFullScreen) {
-          element.mozRequestFullScreen()
-        } else if (element.webkitRequestFullscreen) {
-          element.webkitRequestFullscreen()
+const router = useRouter();
+const route = useRoute();
+const menuState = useMenuState()
+const commonState = useCommonState()
+
+// computed
+const breadcrumbList = computed(() => {
+  return menuState.visitedMenus.filter((item) => {
+    return item.meta.title || ''
+  })
+})
+
+// watch
+watch(route, (newValue, oldValue) => {
+  let arr = []
+  find(router.options.routes)
+  function find(list) {
+    for (let i = 0; i < list.length; i++) {
+      let isActive = false
+      if (list[i].name == route.name) {
+        arr.unshift(list[i])
+        return true
+      }
+      if (list[i].children && list[i].children.length > 0) {
+        isActive = find(list[i].children)
+        if (isActive) {
+          arr.unshift(list[i])
         }
       }
+    }
+    return false
+  }
+  menuState.updateVisitedMenus(arr)
+}, { immdiate: true, deep: true })
 
-    },
-    logout() {
-      this.$store.dispatch('common/logout').then(() => { })
-    },
-  },
+// methods
+function refresh() {
+  Bus.$emit('reload-router-view')
+}
+function notice() { }
+
+function fullscreen() {
+  const isFullscreen = document.fullscreenElement ||
+    document.msFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.webkitFullscreenElement || false;
+
+  if (isFullscreen) {
+    let exitFullScreen = document.exitFullScreen ||
+      document.mozCancelFullScreen ||
+      document.webkitExitFullscreen ||
+      document.msExitFullscreen;
+    if (exitFullScreen) {
+      exitFullScreen.call(document);
+    }
+  } else {
+    let element = document.documentElement
+    if (element.requestFullscreen) {
+      element.requestFullscreen()
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen()
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen()
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen()
+    }
+  }
+
+}
+function logout() {
+  commonState.logout().then(() => {})
 }
 </script>
 <style lang="scss">

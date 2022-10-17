@@ -50,14 +50,20 @@ export default [{
     {
         name: 'Login',
         path: '/login',
-        component: () => import('@/views/common/login.vue')
+        component: () => import('@/views/common/login.vue'),
+        meta: {
+            title: '登录',
+        }
     },
 
     // 404 not found
     {
         name: '404',
         path: '/404',
-        component: () => import('@/views/common/404.vue')
+        component: () => import('@/views/common/404.vue'),
+        meta: {
+            title: '404',
+        }
     },
     {
         path: `/:pathMatch(.*)*`,

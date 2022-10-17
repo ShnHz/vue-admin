@@ -2,7 +2,7 @@
   <div class="tabs-wrap">
     <a-dropdown trigger="contextMenu" alignPoint :style="{display:'block'}">
       <a-tabs type="card" @tabClick="handleClick" @delete="handleDelete" editable :active-key="tabActive">
-        <a-tab-pane :closable="!(item.meta.affix == true)" :key="item.fullPath" v-for="(item) in visitedRoutes">
+        <a-tab-pane :closable="!(item.meta.affix == true)" :key="item.fullPath" v-for="(item) in tabsBarStore.visitedRoutes">
           <template #title>{{item.meta.title}}</template>
         </a-tab-pane>
       </a-tabs>
@@ -15,7 +15,8 @@
 </template>
 <script>
 import { IconLeft, IconRight } from '@arco-design/web-vue/es/icon'
-import { mapActions, mapGetters } from 'vuex'
+import { mapStores } from 'pinia'
+import useTabsBarStore from '@pinia/modules/tabsBar.js'
 
 export default {
   components: {
@@ -36,9 +37,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      visitedRoutes: 'tabsBar/visitedRoutes',
-    }),
+    // note we are not passing an array, just one store after the other
+    // each store will be accessible as its id + 'Store'
+    ...mapStores(useTabsBarStore),
   },
   created() {
     this.initAffixTabs(this.$router.options.routes)
@@ -46,10 +47,10 @@ export default {
   },
   methods: {
     async handleDelete(fullPath) {
-      const view = this.visitedRoutes.find((item) => {
+      const view = this.tabsBarStore.visitedRoutes.find((item) => {
         return fullPath === item.fullPath
       })
-      await this.delVisitedRoute(view)
+      await this.tabsBarStore.delVisitedRoute(view)
       if (view.path === this.$route.path) this.toLastTag()
     },
     handleClick(fullPath) {
@@ -71,23 +72,17 @@ export default {
       })
     },
     toLastTag() {
-      const latestView = this.visitedRoutes.slice(-1)[0]
+      const latestView = this.tabsBarStore.visitedRoutes.slice(-1)[0]
       if (latestView) this.$router.push(latestView)
       else this.$router.push('/')
     },
 
-    ...mapActions({
-      addVisitedRoute: 'tabsBar/addVisitedRoute',
-      delVisitedRoute: 'tabsBar/delVisitedRoute',
-      delOthersVisitedRoutes: 'tabsBar/delOthersVisitedRoutes',
-      delAllVisitedRoutes: 'tabsBar/delAllVisitedRoutes',
-    }),
     async addTabs(tag) {
       if ((tag.matched && tag.matched[0].meta.hasTabs) || tag.hasTabs) {
         if (tag.name && tag.meta && tag.meta.tagHidden !== true) {
           let matched = [tag.name]
           if (tag.matched) matched = tag.matched.map((item) => item.name)
-          await this.addVisitedRoute({
+          await this.tabsBarStore.addVisitedRoute({
             path: tag.path,
             fullPath: tag.fullPath,
             query: tag.query,
@@ -101,7 +96,7 @@ export default {
       }
     },
     delAllVisitedRoutesFun() {
-      this.delAllVisitedRoutes()
+      this.tabsBarStore.delAllVisitedRoutes()
       this.$router.push({
         name: 'Index',
       })

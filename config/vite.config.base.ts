@@ -47,6 +47,10 @@ export default defineConfig({
       find: '@assets',
       replacement: resolve(__dirname, '../src/assets'),
     },
+    {
+      find: '@pinia',
+      replacement: resolve(__dirname, '../src/pinia'),
+    },
     ]
   },
   css: {
