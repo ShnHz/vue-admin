@@ -84,7 +84,7 @@ export default {
       >section {
         height: 100%;
         border: 1px solid var(--color-neutral-3);
-        border-radius: 16px;
+        border-radius: 8px;
 
         ::v-deep(.arco-table) {
           height: 100% !important;
@@ -147,7 +147,7 @@ export default {
       display: flex;
       flex-direction: column;
       border: 1px solid var(--color-neutral-3);
-      border-radius: 16px;
+      border-radius: 8px;
 
       .table-wrap__body>section {
         border: none;

@@ -29,7 +29,7 @@ export default {
     width: 4px;
     position: relative;
     margin-right: 6px;
-    border-radius: 16px;
+    border-radius: 8px;
     background: $--color-primary;
     box-shadow: 3px 3px 12px 5px #4c50600f;
   }

@@ -240,7 +240,7 @@ export default {
           position: absolute;
           top: -82px;
           left: -115px;
-          border-radius: 16px;
+          border-radius: 8px;
           opacity: .9;
           transition: all 1s;
 
